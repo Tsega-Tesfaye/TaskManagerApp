@@ -1,6 +1,10 @@
 package model;
 
 import java.time.LocalDateTime;
+
+/**
+ * Represents a Task that belongs to a user.
+ */
 public class Task implements Model {
     private int id;
     private String title;
@@ -8,7 +12,7 @@ public class Task implements Model {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private LocalDateTime dueAt;
-    private String status;
+    private String status; // "pending", "done"
     private int userId;
 
     public Task() {}
@@ -24,62 +28,8 @@ public class Task implements Model {
         this.status = status;
         this.userId = userId;
     }
-   @Override
-    public int getId() {
-        return id;
-        @Override
-       public void setId(int id) {
-            this.id = id;
-            public String getTitle() {
-                return title;
-                    public void setTitle(String title) {
-                        this.title= title;
-                        public string getDescription() {
-                            return description;
-                            public void setDescription(String description) {
-                                this.description = description;
-                                public LocalDateTime getCreatedAt()
-                           return createdAt;
-                           public void setCreatedAt(LocalDateTime createdAt) {
-                               this.createdAt = createdAt;
-                           }
-                           public LocalDateTime getUpdatedAt() {
-                               return updatedAt;
-                           }
-                           public void setUpdatedAt(LocalDateTime updatedAt) {
-                               this.updatedAt = updatedAt;
-                           }
-                           public LocalDateTime getDueAt() {
-                               return dueAt;
-                           }
-                           public void setDueAt(LocalDateTime dueAt) {
-                               this.dueAt = dueAt;
-                           }
-                           public String getStatus() {
-                               return status;
-                           }
-                           public void setStatus(String status) {
-                               this.status = status;
-                           }
-                           public int getUserId() {
-                               return userId;
-                           }
-                           public void setUserId(int userId) {
-                               this.userId = userId;
-                           }
-                           public String toDisplayString() {
-                               return "Task: " + title + ", Due: " + dueAt.toLocalDate() + ", Status: " + status;
-                           }
-                           @Override
-                           public String toString() {
-                               return "Task{" +
-                                       "id=" + id +
-                                       ", title='" + title + '\'' +
-                                       ", description='" + description + '\'' +
-                                       ", createdAt=" + createdAt +
-                                       ", updatedAt=" + updatedAt +
-                                       ", dueAt=" + dueAt +
-                                       ", status='" + status + '\'' +
-                                       ", userId=" + userId +
-                                       '}';
-                           }
+
+    // Getters and setters ...
+
+    // Method implementation(implement all listed in the Model interface)
+}
