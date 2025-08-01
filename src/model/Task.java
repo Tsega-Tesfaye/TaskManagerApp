@@ -24,10 +24,10 @@ public class Task implements Model {
         this.status = status;
         this.userId = userId;
     }
-   @override
+   @Override
     public int getId() {
         return id;
-        @override
+        @Override
        public void setId(int id) {
             this.id = id;
             public String getTitle() {
@@ -39,7 +39,7 @@ public class Task implements Model {
                             public void setDescription(String description) {
                                 this.description = description;
                                 public LocalDateTime getCreatedAt()
-                           return created;
+                           return createdAt;
                            public void setCreatedAt(LocalDateTime createdAt) {
                                this.createdAt = createdAt;
                            }
