@@ -1,148 +1,72 @@
 package controller;
 
 import model.Task;
+import model.TaskManagerModel;
+import view.View;
 import java.util.List;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import model.DataSource;
-import java.sql.ResultSet;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 
-public class TasksController implements Controller<Task> {
+public class TasksController {
+    private TaskManagerModel model;
+    private View view;
 
-    @Override
-    public void create(Task task) {
-        String sql = "INSERT INTO Task (title, description, createdAt, updatedAt, dueAt, status, userId) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?)";
-        try (Connection conn = DataSource.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+    public TasksController(TaskManagerModel model, View view) {
+        this.model = model;
+        this.view = view;
+    }
 
-            stmt.setString(1, task.getTitle());
-            stmt.setString(2, task.getDescription());
-            stmt.setString(3, task.getCreatedAt().toString());
-            stmt.setString(4, task.getUpdatedAt().toString());
-            stmt.setString(5, task.getDueAt().toString());
-            stmt.setString(6, task.getStatus());
-            stmt.setInt(7, task.getUserId());
+    public void addTask(String title, String description) {
+        if (title == null || title.trim().isEmpty()) {
+            view.showMessage("Error: Task title cannot be empty");
+            return;
+        }
+        
+        model.addTask(title, description);
+        view.showMessage("Task added successfully");
+    }
 
-            int rowsInserted = stmt.executeUpdate();
-            if (rowsInserted > 0) {
-                System.out.println("Task added successfully.");
-            }
+    public void viewAllTasks() {
+        List<Task> tasks = model.getAllTasks();
+        view.showTaskList(tasks);
+    }
 
-        } catch (SQLException e) {
-            System.out.println("Error inserting task: " + e.getMessage());
+    public void updateTask(int id, String title, String description) {
+        if (title == null || title.trim().isEmpty()) {
+            view.showMessage("Error: Task title cannot be empty");
+            return;
+        }
+        
+        boolean updated = model.updateTask(id, title, description);
+        if (updated) {
+            view.showMessage("Task updated successfully");
+        } else {
+            view.showMessage("Error: Task not found with ID: " + id);
         }
     }
 
-    @Override
-    public Task read(int id) {
-        String sql = "SELECT * FROM Task WHERE id = ?";
-        Task task = null;
-
-        try (Connection conn = model.DataSource.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setInt(1, id);
-
-            ResultSet rs = stmt.executeQuery();
-
-            if (rs.next()) {
-                task = new Task();
-                task.setId(rs.getInt("id"));
-                task.setTitle(rs.getString("title"));
-                task.setDescription(rs.getString("description"));
-                task.setCreatedAt(LocalDateTime.parse(rs.getString("createdAt")));
-                task.setUpdatedAt(LocalDateTime.parse(rs.getString("updatedAt")));
-                task.setDueAt(LocalDateTime.parse(rs.getString("dueAt")));
-                task.setStatus(rs.getString("status"));
-                task.setUserId(rs.getInt("userId"));
-            }
-
-        } catch (Exception e) {
-            System.out.println("Error reading task: " + e.getMessage());
-        }
-
-        return task;
-    }
-
-    @Override
-    public void update(Task task) {
-        String sql = "UPDATE tasks SET title = ?, description = ?, updatedAt = ?, dueAt = ?, status = ? " +
-                "WHERE id = ?";
-
-        try (Connection conn = model.DataSource.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setString(1, task.getTitle());
-            stmt.setString(2, task.getDescription());
-            stmt.setString(3, task.getUpdatedAt().toString());
-            stmt.setString(4, task.getDueAt().toString());
-            stmt.setString(5, task.getStatus());
-            stmt.setInt(6, task.getId());
-            int rowsUpdated = stmt.executeUpdate();
-            if (rowsUpdated > 0) {
-                System.out.println("Task updated successfully.");
-            } else {
-                System.out.println("No task found with that ID.");
-            }
-
-        } catch (SQLException e) {
-            System.out.println("Error updating task: " + e.getMessage());
+    public void deleteTask(int id) {
+        boolean deleted = model.deleteTask(id);
+        if (deleted) {
+            view.showMessage("Task deleted successfully");
+        } else {
+            view.showMessage("Error: Task not found with ID: " + id);
         }
     }
-
-    @Override
-    public void delete(int id) {
-        String sql = "DELETE FROM tasks WHERE id = ?";
-
-        try (Connection conn = model.DataSource.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setInt(1, id);
-
-            int rowsDeleted = stmt.executeUpdate();
-            if (rowsDeleted > 0) {
-                System.out.println("Task deleted successfully.");
-            } else {
-                System.out.println("No task found with that ID.");
-            }
-
-        } catch (SQLException e) {
-            System.out.println("Error deleting task: " + e.getMessage());
+    
+    public void markTaskAsDone(int id) {
+        boolean updated = model.updateTaskStatus(id, "done");
+        if (updated) {
+            view.showMessage("Task marked as done successfully");
+        } else {
+            view.showMessage("Error: Task not found with ID: " + id);
         }
     }
-
-    public List<Task> getTasksByUser(int userId) {
-        List<Task> tasks = new ArrayList<>();
-        String sql = "SELECT * FROM tasks WHERE userId = ?";
-
-        try (Connection conn = model.DataSource.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setInt(1, userId);
-            ResultSet rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                Task task = new Task();
-                task.setId(rs.getInt("id"));
-                task.setTitle(rs.getString("title"));
-                task.setDescription(rs.getString("description"));
-                task.setCreatedAt(LocalDateTime.parse(rs.getString("createdAt")));
-                task.setUpdatedAt(LocalDateTime.parse(rs.getString("updatedAt")));
-                task.setDueAt(LocalDateTime.parse(rs.getString("dueAt")));
-                task.setStatus(rs.getString("status"));
-                task.setUserId(rs.getInt("userId"));
-
-                tasks.add(task);
-            }
-
-        } catch (Exception e) {
-            System.out.println("Error fetching tasks: " + e.getMessage());
+    
+    public void unmarkTaskAsDone(int id) {
+        boolean updated = model.updateTaskStatus(id, "pending");
+        if (updated) {
+            view.showMessage("Task unmarked as done successfully");
+        } else {
+            view.showMessage("Error: Task not found with ID: " + id);
         }
-
-        return tasks;
     }
 }

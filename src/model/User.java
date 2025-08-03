@@ -49,4 +49,8 @@ public class User {
     public String toDisplayString() {
         return "User ID: " + ", Username: " + username;
     }
+     @Override
+    public String toString() {
+        return "User{Id=" + id + ", username=" + username + ", password=" + password + "}";
+    }
 }
