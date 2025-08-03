@@ -2,7 +2,9 @@ package model;
 
 import java.time.LocalDateTime;
 
-
+/**
+ * Represents a Task that belongs to a user.
+ */
 public class Task implements Model {
     private int id;
     private String title;
@@ -10,7 +12,7 @@ public class Task implements Model {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private LocalDateTime dueAt;
-    private String status;
+    private String status; // "pending", "done"
     private int userId;
 
     public Task() {}
@@ -26,77 +28,8 @@ public class Task implements Model {
         this.status = status;
         this.userId = userId;
     }
-    public int getId() {
-        return id;
-    }
-    public String getTitle() {
-        return title;
-    }
 
-    public String getDescription() {
-        return description;
-    }
+    // Getters and setters ...
 
-    public Object getCreatedAt() {
-        return createdAt;
-    }
-
-    public Object getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public Object getDueAt() {
-        return dueAt;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    @Override
-    public boolean save() {
-        return false;
-    }
-
-    @Override
-    public boolean delete() {
-        return false;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public void setDueAt(LocalDateTime dueAt) {
-        this.dueAt=dueAt;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
+    // Method implementation(implement all listed in the Model interface)
 }
