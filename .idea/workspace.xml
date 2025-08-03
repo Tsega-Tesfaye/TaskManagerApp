@@ -4,28 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8acd6333-05a8-4ff6-a2bf-2e64bd361547" name="Changes" comment="Merge remote-tracking branch 'origin/master'&#10;&#10;# Conflicts:&#10;#&#9;.idea/misc.xml&#10;#&#9;.idea/vcs.xml">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/TaskManagerApp.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/material_theme_project_new.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/app/TaskManagerApp.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/controller/Controller.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/controller/Pomodoro.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/controller/TasksController.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/model/Model.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task-manager.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controller/Pomodoro.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/Pomodoro.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controller/TasksController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/TasksController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/Task.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Task.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/User.java" afterDir="false" />
-    </list>
+    <list default="true" id="8acd6333-05a8-4ff6-a2bf-2e64bd361547" name="Changes" comment="Task controller" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -154,7 +133,15 @@
       <option name="project" value="LOCAL" />
       <updated>1753995352935</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Task controller">
+      <option name="closed" value="true" />
+      <created>1754032767510</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1754032767510</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -208,9 +195,10 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="maven configured" />
     <MESSAGE value="TaskController built" />
     <MESSAGE value="Merge remote-tracking branch 'origin/master'&#10;&#10;# Conflicts:&#10;#&#9;.idea/misc.xml&#10;#&#9;.idea/vcs.xml" />
-    <option name="LAST_COMMIT_MESSAGE" value="Merge remote-tracking branch 'origin/master'&#10;&#10;# Conflicts:&#10;#&#9;.idea/misc.xml&#10;#&#9;.idea/vcs.xml" />
+    <MESSAGE value="maven configured" />
+    <MESSAGE value="Task controller" />
+    <option name="LAST_COMMIT_MESSAGE" value="Task controller" />
   </component>
 </project>

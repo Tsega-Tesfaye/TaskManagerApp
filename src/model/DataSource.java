@@ -4,9 +4,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-/**
- * Provides a singleton SQLite database connection.
- */
 public class DataSource {
     // Holds the singleton connection instance
     private static Connection connection = null;

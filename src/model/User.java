@@ -8,7 +8,7 @@ public class User {
     public User() {
     }
 
-   // Constructor to create a user with id, username and password
+    // Constructor to create a user with id, username and password
     public User(int id, String username, String password) {
         this.id = id;
         this.username = username;
@@ -17,19 +17,20 @@ public class User {
 
     // Getters and setters
 
-  public int getId() {
+    public int getId() {
         return id;
     }
 
- public String getUsername() {
+    public String getUsername() {
 
         return username;
     }
- public String getPassword() {
+
+    public String getPassword() {
         return password;
     }
 
-   public void setId(int id) {
+    public void setId(int id) {
 
         this.id = id;
     }
@@ -38,15 +39,14 @@ public class User {
 
         this.username = username;
     }
+
     public void setPassword(String password) {
 
         this.password = password;
     }
+
     // I made this one just to show user info in a simple way without showing the password
     public String toDisplayString() {
         return "User ID: " + ", Username: " + username;
     }
-    @override
-    public String toString() {
-        return "User{Id=" + id + ", username= " + username + ", password= " + password + "};
-    }
+}
