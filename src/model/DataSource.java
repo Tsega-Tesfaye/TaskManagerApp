@@ -4,27 +4,26 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class DataSource {
-    
+
+public class DataSource { 
     private static Connection connection = null;
 
 
     private static final String URL = "jdbc:sqlite:taskmanager.db";
 
     private DataSource() {
-        
     }
 
-    
+
     public static Connection getConnection() throws SQLException {
         if (connection == null || connection.isClosed()) {
             try {
-                
+                // Load the SQLite JDBC driver
                 Class.forName("org.sqlite.JDBC");
             } catch (ClassNotFoundException e) {
                 throw new SQLException("SQLite JDBC Driver not found. Make sure it is in your classpath.", e);
             }
-            
+            // Create a connection to the SQLite database
             connection = DriverManager.getConnection(URL);
         }
         return connection;
@@ -49,9 +48,7 @@ public class DataSource {
 
         try (Connection conn = getConnection();
              java.sql.Statement stmt = conn.createStatement()) {
-            
             stmt.execute(userTable);
-            
             stmt.execute(taskTable);
         }
     }

@@ -1,41 +1,41 @@
 package controller;
 
 import model.Task;
-import model.TaskManagerModel;
+import model.ManagerModel;
 import view.View;
 import java.util.List;
 
 public class TasksController {
-    private TaskManagerModel model;
+    private ManagerModel model;
     private View view;
 
-    public TasksController(TaskManagerModel model, View view) {
+    public TasksController(ManagerModel model, View view) {
         this.model = model;
         this.view = view;
     }
 
-    public void addTask(String title, String description) {
+    public void addTask(String title, String description, int userId) {
         if (title == null || title.trim().isEmpty()) {
             view.showMessage("Error: Task title cannot be empty");
             return;
         }
         
-        model.addTask(title, description);
+        model.addTask(title, description, userId);
         view.showMessage("Task added successfully");
     }
 
-    public void viewAllTasks() {
-        List<Task> tasks = model.getAllTasks();
+    public void viewAllTasks(int userId) {
+        List<Task> tasks = model.getAllTasks(userId);
         view.showTaskList(tasks);
     }
 
-    public void updateTask(int id, String title, String description) {
+    public void updateTask(int id, String title, String description, int userId) {
         if (title == null || title.trim().isEmpty()) {
             view.showMessage("Error: Task title cannot be empty");
             return;
         }
         
-        boolean updated = model.updateTask(id, title, description);
+        boolean updated = model.updateTask(id, title, description, userId);
         if (updated) {
             view.showMessage("Task updated successfully");
         } else {
@@ -43,8 +43,8 @@ public class TasksController {
         }
     }
 
-    public void deleteTask(int id) {
-        boolean deleted = model.deleteTask(id);
+    public void deleteTask(int id, int userId) {
+        boolean deleted = model.deleteTask(id, userId);
         if (deleted) {
             view.showMessage("Task deleted successfully");
         } else {
@@ -52,8 +52,8 @@ public class TasksController {
         }
     }
     
-    public void markTaskAsDone(int id) {
-        boolean updated = model.updateTaskStatus(id, "done");
+    public void markTaskAsDone(int id, int userId) {
+        boolean updated = model.updateTaskStatus(id, "done", userId);
         if (updated) {
             view.showMessage("Task marked as done successfully");
         } else {
@@ -61,10 +61,10 @@ public class TasksController {
         }
     }
     
-    public void unmarkTaskAsDone(int id) {
-        boolean updated = model.updateTaskStatus(id, "pending");
+    public void markTaskAsNotDone(int id, int userId) {
+        boolean updated = model.updateTaskStatus(id, "pending", userId);
         if (updated) {
-            view.showMessage("Task unmarked as done successfully");
+            view.showMessage("Task marked as not done successfully");
         } else {
             view.showMessage("Error: Task not found with ID: " + id);
         }

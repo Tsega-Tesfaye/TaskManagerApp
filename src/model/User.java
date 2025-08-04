@@ -4,18 +4,15 @@ public class User {
     private String username;
     private String password;
 
-    // Empty constructor (needed sometimes when we dont want to start right away)
     public User() {
     }
 
-    // Constructor to create a user with id, username and password
     public User(int id, String username, String password) {
         this.id = id;
         this.username = username;
         this.password = password;
     }
 
-    // Getters and setters
 
     public int getId() {
         return id;

@@ -2,9 +2,7 @@ package model;
 
 import java.time.LocalDateTime;
 
-/**
- * Represents a Task that belongs to a user.
- */
+
 public class Task implements Model {
     private int id;
     private String title;
@@ -12,7 +10,7 @@ public class Task implements Model {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private LocalDateTime dueAt;
-    private String status; // "pending", "done"
+    private String status; 
     private int userId;
 
     public Task() {}
