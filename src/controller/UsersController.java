@@ -77,7 +77,13 @@ public class UsersController implements Controller<User> {
         return user;
     }
 
-
+    /**
+     * Updates an existing user's information in the database.
+     * Students: Use an UPDATE SQL statement to modify the user's data based on
+     * their ID.
+     * 
+     * @param user The User object containing updated information.
+     */
     @Override
     public void update(User user) {
         String sql = "UPDATE User SET username = ?, password = ? WHERE id = ?";
@@ -101,7 +107,12 @@ public class UsersController implements Controller<User> {
         }
     }
 
-
+    /**
+     * Deletes a user from the database by their ID.
+     * Students: Use a DELETE SQL statement with a WHERE clause on the user's ID.
+     * 
+     * @param id The unique identifier of the user to be deleted.
+     */
     @Override
     public void delete(int id) {
         String sql = "DELETE FROM User WHERE id = ?";
@@ -123,7 +134,13 @@ public class UsersController implements Controller<User> {
         }
     }
 
-
+    /**
+     * Retrieves all users from the database.
+     * Students: Use a SELECT * FROM users query, iterate through the ResultSet,
+     * and create a list of User objects to return.
+     * 
+     * @return A list of all User objects in the database.
+     */
     public List<User> getAllUsers() {
         String sql = "SELECT id, username, password FROM User";
         List<User> users = new ArrayList<>();

@@ -1,18 +1,19 @@
 package model;
-public class User {
+
+public class User implements Model {
     private int id;
+    
+
     private String username;
     private String password;
 
     public User() {
     }
-
     public User(int id, String username, String password) {
         this.id = id;
         this.username = username;
         this.password = password;
     }
-
 
     public int getId() {
         return id;
@@ -23,9 +24,11 @@ public class User {
         return username;
     }
 
+
     public String getPassword() {
         return password;
     }
+
 
     public void setId(int id) {
 
@@ -41,13 +44,12 @@ public class User {
 
         this.password = password;
     }
-
     // I made this one just to show user info in a simple way without showing the password
     public String toDisplayString() {
-        return "User ID: " + ", Username: " + username;
+        return "User ID: " + id + ", Username: " + username;
     }
-     @Override
+    @Override
     public String toString() {
         return "User{Id=" + id + ", username=" + username + ", password=" + password + "}";
     }
-}
+} 

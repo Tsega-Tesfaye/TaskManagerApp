@@ -1,0 +1,11 @@
+model\Model.class
+model\Task.class
+controller\Controller.class
+service\AuthService.class
+controller\TasksController.class
+view\View.class
+model\DataSource.class
+app\TaskManagerApp.class
+controller\UsersController.class
+model\ManagerModel.class
+model\User.class
