@@ -1,78 +1,150 @@
 package controller;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
+import model.DataSource;
+import model.ManagerModel;
 import model.User;
+import view.View;
 
-/**
- * UsersController manages all actions related to User objects.
- * Each method should interact with the database using the DataSource class and
- * SQL queries.
- * Students should implement the logic for each method as described in the
- * comments below.
- */
 public class UsersController implements Controller<User> {
+    private final ManagerModel model;
+    private final View view;
 
-    /**
-     * Inserts a new user into the PostgreSQL database.
-     * Students: Use DataSource.getConnection() to get a connection, then use a
-     * PreparedStatement
-     * to insert the user's data into the appropriate table. Handle SQL exceptions
-     * and close resources.
-     * 
-     * @param user The User object to be added to the database.
-     */
+    public UsersController(ManagerModel model, View view) {
+        this.model = model;
+        this.view = view;
+    }
+
     @Override
     public void create(User user) {
-        // TODO: Implement logic to insert user into the database using JDBC.
+        String sql = "INSERT INTO User (username, password) VALUES (?, ?)";
+        
+        try (Connection conn = DataSource.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            
+            pstmt.setString(1, user.getUsername());
+            pstmt.setString(2, user.getPassword());
+            
+            int affectedRows = pstmt.executeUpdate();
+            
+            if (affectedRows == 0) {
+                throw new SQLException("Creating user failed, no rows affected.");
+            }
+            
+            try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    user.setId(generatedKeys.getInt(1));
+                } else {
+                    throw new SQLException("Creating user failed, no ID obtained.");
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error creating user: " + e.getMessage());
+            throw new RuntimeException("Failed to create user", e);
+        }
     }
 
-    /**
-     * Fetches a user from the database by their unique ID.
-     * Students: Use a SELECT query with a WHERE clause on the user's ID. Map the
-     * result set to a User object.
-     * 
-     * @param id The unique identifier of the user.
-     * @return The User object if found, otherwise null.
-     */
     @Override
     public User read(int id) {
-        // TODO: Implement logic to fetch user by id from the database using JDBC.
-        return null;
+        String sql = "SELECT id, username, password FROM User WHERE id = ?";
+        User user = null;
+        
+        try (Connection conn = DataSource.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setInt(1, id);
+            ResultSet rs = pstmt.executeQuery();
+            
+            if (rs.next()) {
+                user = new User();
+                user.setId(rs.getInt("id"));
+                user.setUsername(rs.getString("username"));
+                user.setPassword(rs.getString("password"));
+            }
+            
+        } catch (SQLException e) {
+            System.err.println("Error reading user: " + e.getMessage());
+            throw new RuntimeException("Failed to read user", e);
+        }
+        
+        return user;
     }
 
-    /**
-     * Updates an existing user's information in the database.
-     * Students: Use an UPDATE SQL statement to modify the user's data based on
-     * their ID.
-     * 
-     * @param user The User object containing updated information.
-     */
+
     @Override
     public void update(User user) {
-        // TODO: Implement logic to update user info in the database using JDBC.
+        String sql = "UPDATE User SET username = ?, password = ? WHERE id = ?";
+        
+        try (Connection conn = DataSource.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setString(1, user.getUsername());
+            pstmt.setString(2, user.getPassword());
+            pstmt.setInt(3, user.getId());
+            
+            int affectedRows = pstmt.executeUpdate();
+            
+            if (affectedRows == 0) {
+                throw new SQLException("Updating user failed, no rows affected.");
+            }
+            
+        } catch (SQLException e) {
+            System.err.println("Error updating user: " + e.getMessage());
+            throw new RuntimeException("Failed to update user", e);
+        }
     }
 
-    /**
-     * Deletes a user from the database by their ID.
-     * Students: Use a DELETE SQL statement with a WHERE clause on the user's ID.
-     * 
-     * @param id The unique identifier of the user to be deleted.
-     */
+
     @Override
     public void delete(int id) {
-        // TODO: Implement logic to delete user from the database using JDBC.
+        String sql = "DELETE FROM User WHERE id = ?";
+        
+        try (Connection conn = DataSource.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setInt(1, id);
+            
+            int affectedRows = pstmt.executeUpdate();
+            
+            if (affectedRows == 0) {
+                throw new SQLException("Deleting user failed, no rows affected.");
+            }
+            
+        } catch (SQLException e) {
+            System.err.println("Error deleting user: " + e.getMessage());
+            throw new RuntimeException("Failed to delete user", e);
+        }
     }
 
-    /**
-     * Retrieves all users from the database.
-     * Students: Use a SELECT * FROM users query, iterate through the ResultSet,
-     * and create a list of User objects to return.
-     * 
-     * @return A list of all User objects in the database.
-     */
+
     public List<User> getAllUsers() {
-        // TODO: Implement logic to list all users from the database using JDBC.
-        return null;
+        String sql = "SELECT id, username, password FROM User";
+        List<User> users = new ArrayList<>();
+        
+        try (Connection conn = DataSource.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            
+            while (rs.next()) {
+                User user = new User();
+                user.setId(rs.getInt("id"));
+                user.setUsername(rs.getString("username"));
+                user.setPassword(rs.getString("password"));
+                users.add(user);
+            }
+            
+        } catch (SQLException e) {
+            System.err.println("Error retrieving users: " + e.getMessage());
+            throw new RuntimeException("Failed to retrieve users", e);
+        }
+        
+        return users;
     }
 }
